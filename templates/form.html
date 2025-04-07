@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>SMTP рассыльщик</title>
+    <style>
+        /* Пример CSS-стилей, как у Yandex Почты */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f3f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #1e70bf;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        input[type="file"] {
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #1e70bf;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #155a9e;
+        }
+        .error {
+            color: #d93025;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .success {
+            color: #188038;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>SMTP рассыльщик</h1>
+    {{ if .error }}
+    <p class="error">Ошибка: {{ .error }}</p>
+    {{ end }}
+    {{ if .message }}
+    <p class="success">{{ .message }}</p>
+    {{ end }}
+    <form method="POST" action="/send" enctype="multipart/form-data">
+        <label for="from">От кого (email):</label>
+        <input type="email" id="from" name="from" value="msgrmailer@40rgsm.ru" required>
+
+        <label for="to">Кому (email, разделённые запятыми):</label>
+        <input type="text" id="to" name="to" placeholder="recipient1@example.com, recipient2@example.com">
+
+        <p style="text-align:center;">ИЛИ</p>
+
+        <label for="recipientsFile">Загрузите файл со списком адресов (один email в строке):</label>
+        <input type="file" id="recipientsFile" name="recipientsFile" accept=".txt">
+
+        <label for="subject">Тема:</label>
+        <input type="text" id="subject" name="subject" placeholder="Тестовая тема" required>
+
+        <label for="body">Сообщение:</label>
+        <textarea id="body" name="body" rows="10" placeholder="Введите текст сообщения..." required></textarea>
+
+        <button type="submit">Отправить</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  web:
+    build: ./cmd/web
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mail
+    volumes:
+      - ./templates:/app/templates
+  mail:
+    build: ./mail
+    ports:
+      - "25:25"
+      - "587:587"
+    volumes:
+      - ./mail/postfix:/etc/postfix
+      - ./mail/opendkim:/etc/opendkim
